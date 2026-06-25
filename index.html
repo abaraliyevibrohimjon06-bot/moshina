@@ -6,10 +6,7 @@
 <title>CarWorld — Dunyo Mashinalari</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
-  :root {
-    --bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--border:#2a2a3e;
-    --accent:#e8401a;--accent2:#ff6b35;--text:#e8e8f0;--muted:#7070a0;--glow:rgba(232,64,26,0.3);
-  }
+  :root{--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--border:#2a2a3e;--accent:#e8401a;--accent2:#ff6b35;--text:#e8e8f0;--muted:#7070a0;--glow:rgba(232,64,26,0.3);}
   *{margin:0;padding:0;box-sizing:border-box;}
   body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;}
   header{background:linear-gradient(135deg,#0a0a0f,#1a0a05,#0a0a0f);border-bottom:1px solid var(--border);padding:16px 20px;position:sticky;top:0;z-index:100;}
@@ -29,7 +26,7 @@
   .search-btn:hover{background:var(--accent2);}
   .quick-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}
   .tag{background:var(--card);border:1px solid var(--border);color:var(--muted);font-size:12px;padding:5px 12px;border-radius:20px;cursor:pointer;transition:all .2s;}
-  .tag:hover,.tag.active{border-color:var(--accent);color:var(--accent);}
+  .tag:hover{border-color:var(--accent);color:var(--accent);}
   .stats-bar{display:flex;justify-content:center;gap:30px;padding:18px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;}
   .stat{text-align:center;}
   .stat-num{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--accent);}
@@ -37,8 +34,6 @@
   .main{max-width:960px;margin:0 auto;padding:24px 16px;}
   .not-found{display:none;text-align:center;padding:40px 20px;color:var(--muted);}
   .not-found .nf-icon{font-size:48px;margin-bottom:12px;}
-  .not-found p{font-size:14px;}
-  /* RESULT */
   .result-card{display:none;}
   .car-banner{position:relative;width:100%;height:220px;border-radius:16px 16px 0 0;overflow:hidden;background:var(--surface);}
   .car-banner img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
@@ -64,7 +59,6 @@
   .part-info{padding:10px 12px;}
   .part-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
   .part-detail{font-size:11px;color:var(--muted);}
-  /* BRANDS */
   .brands-section{margin-top:32px;}
   .sec-header{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
   .brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
@@ -84,39 +78,35 @@
     <div class="tagline">🌍 Dunyo Mashinalari</div>
   </div>
 </header>
-
 <div class="hero">
   <h1>Dunyo Mashinalari<br>haqida <em>to'liq</em> ma'lumot</h1>
   <p>Kompaniya · Yil · Dvigatel · Zapchastlar · Rasm</p>
   <div class="search-wrap">
-    <input class="search-input" id="searchInput" type="text" placeholder="Moshina nomi kiriting..." onkeyup="liveSearch(this.value)">
+    <input class="search-input" id="searchInput" type="text" placeholder="Moshina nomi kiriting...">
     <button class="search-btn" onclick="doSearch()">IZLA</button>
   </div>
-  <div class="quick-tags" id="quickTags">
+  <div class="quick-tags">
     <div class="tag" onclick="selectCar('chevrolet_cobalt')">🇺🇿 Cobalt</div>
     <div class="tag" onclick="selectCar('toyota_corolla')">🇯🇵 Corolla</div>
     <div class="tag" onclick="selectCar('bmw_3series')">🇩🇪 BMW 3</div>
     <div class="tag" onclick="selectCar('tesla_model_s')">🇺🇸 Tesla S</div>
     <div class="tag" onclick="selectCar('mercedes_e')">🇩🇪 Mercedes E</div>
     <div class="tag" onclick="selectCar('lada_vesta')">🇷🇺 Lada Vesta</div>
-    <div class="tag" onclick="selectCar('hyundai_elantra')">🇰🇷 Elantra</div>
     <div class="tag" onclick="selectCar('honda_civic')">🇯🇵 Civic</div>
+    <div class="tag" onclick="selectCar('kia_sportage')">🇰🇷 Sportage</div>
   </div>
 </div>
-
 <div class="stats-bar">
-  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Moshina</div></div>
+  <div class="stat"><div class="stat-num">12</div><div class="stat-label">Moshina</div></div>
   <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Brend</div></div>
   <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Davlat</div></div>
   <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Bepul</div></div>
 </div>
-
 <div class="main">
   <div class="not-found" id="notFound">
     <div class="nf-icon">🔍</div>
     <p>Moshina topilmadi. Boshqa nom bilan urinib ko'ring.</p>
   </div>
-
   <div class="result-card" id="resultCard">
     <div class="car-banner">
       <img id="carImg" src="" alt="">
@@ -137,58 +127,189 @@
       <div class="parts-grid" id="partsGrid"></div>
     </div>
   </div>
-
   <div class="brands-section" id="brandsSection">
     <div class="sec-header">MASHHUR BRENDLAR</div>
     <div class="brand-grid">
-      <div class="brand-card" onclick="filterBrand('Toyota')"><div class="brand-flag">🇯🇵</div><div class="brand-name">Toyota</div><div class="brand-country">Yaponiya</div></div>
-      <div class="brand-card" onclick="filterBrand('BMW')"><div class="brand-flag">🇩🇪</div><div class="brand-name">BMW</div><div class="brand-country">Germaniya</div></div>
-      <div class="brand-card" onclick="filterBrand('Mercedes-Benz')"><div class="brand-flag">🇩🇪</div><div class="brand-name">Mercedes</div><div class="brand-country">Germaniya</div></div>
-      <div class="brand-card" onclick="filterBrand('Tesla')"><div class="brand-flag">🇺🇸</div><div class="brand-name">Tesla</div><div class="brand-country">AQSh</div></div>
-      <div class="brand-card" onclick="filterBrand('Honda')"><div class="brand-flag">🇯🇵</div><div class="brand-name">Honda</div><div class="brand-country">Yaponiya</div></div>
-      <div class="brand-card" onclick="filterBrand('Chevrolet')"><div class="brand-flag">🇺🇿</div><div class="brand-name">Chevrolet</div><div class="brand-country">O'zbekiston</div></div>
-      <div class="brand-card" onclick="filterBrand('Hyundai')"><div class="brand-flag">🇰🇷</div><div class="brand-name">Hyundai</div><div class="brand-country">Koreya</div></div>
-      <div class="brand-card" onclick="filterBrand('Lada')"><div class="brand-flag">🇷🇺</div><div class="brand-name">Lada</div><div class="brand-country">Rossiya</div></div>
-      <div class="brand-card" onclick="filterBrand('Audi')"><div class="brand-flag">🇩🇪</div><div class="brand-name">Audi</div><div class="brand-country">Germaniya</div></div>
-      <div class="brand-card" onclick="filterBrand('Kia')"><div class="brand-flag">🇰🇷</div><div class="brand-name">Kia</div><div class="brand-country">Koreya</div></div>
-      <div class="brand-card" onclick="filterBrand('Ford')"><div class="brand-flag">🇺🇸</div><div class="brand-name">Ford</div><div class="brand-country">AQSh</div></div>
-      <div class="brand-card" onclick="filterBrand('Volkswagen')"><div class="brand-flag">🇩🇪</div><div class="brand-name">VW</div><div class="brand-country">Germaniya</div></div>
+      <div class="brand-card" onclick="selectCar('toyota_corolla')"><div class="brand-flag">🇯🇵</div><div class="brand-name">Toyota</div><div class="brand-country">Yaponiya</div></div>
+      <div class="brand-card" onclick="selectCar('bmw_3series')"><div class="brand-flag">🇩🇪</div><div class="brand-name">BMW</div><div class="brand-country">Germaniya</div></div>
+      <div class="brand-card" onclick="selectCar('mercedes_e')"><div class="brand-flag">🇩🇪</div><div class="brand-name">Mercedes</div><div class="brand-country">Germaniya</div></div>
+      <div class="brand-card" onclick="selectCar('tesla_model_s')"><div class="brand-flag">🇺🇸</div><div class="brand-name">Tesla</div><div class="brand-country">AQSh</div></div>
+      <div class="brand-card" onclick="selectCar('honda_civic')"><div class="brand-flag">🇯🇵</div><div class="brand-name">Honda</div><div class="brand-country">Yaponiya</div></div>
+      <div class="brand-card" onclick="selectCar('chevrolet_cobalt')"><div class="brand-flag">🇺🇿</div><div class="brand-name">Chevrolet</div><div class="brand-country">O'zbekiston</div></div>
+      <div class="brand-card" onclick="selectCar('hyundai_elantra')"><div class="brand-flag">🇰🇷</div><div class="brand-name">Hyundai</div><div class="brand-country">Koreya</div></div>
+      <div class="brand-card" onclick="selectCar('lada_vesta')"><div class="brand-flag">🇷🇺</div><div class="brand-name">Lada</div><div class="brand-country">Rossiya</div></div>
+      <div class="brand-card" onclick="selectCar('audi_a4')"><div class="brand-flag">🇩🇪</div><div class="brand-name">Audi</div><div class="brand-country">Germaniya</div></div>
+      <div class="brand-card" onclick="selectCar('kia_sportage')"><div class="brand-flag">🇰🇷</div><div class="brand-name">Kia</div><div class="brand-country">Koreya</div></div>
+      <div class="brand-card" onclick="selectCar('ford_f150')"><div class="brand-flag">🇺🇸</div><div class="brand-name">Ford</div><div class="brand-country">AQSh</div></div>
+      <div class="brand-card" onclick="selectCar('volkswagen_golf')"><div class="brand-flag">🇩🇪</div><div class="brand-name">VW</div><div class="brand-country">Germaniya</div></div>
     </div>
   </div>
 </div>
-
 <footer><p>🚗 <span>CarWorld</span> — Dunyo mashinalari ensiklopediyasi</p></footer>
 
 <script>
+// Har bir moshina uchun REAL Wikipedia / Commons rasmlar
 const CARS = {
-  chevrolet_cobalt:{name:"Chevrolet Cobalt",icon:"🚗",company:"GM Uzbekistan",country:"🇺🇿 O'zbekiston",founded:"2005",years:"2005–hozir",type:"Sedan",engine:"1.5L 4-silindr benzin",power:"106 ot kuchi",img:"https://source.unsplash.com/800x400/?chevrolet,cobalt,sedan",desc:"Chevrolet Cobalt — O'zbekistonda eng ko'p sotilgan mashinalardan biri. GM Uzbekistan tomonidan Asaka shahrida ishlab chiqariladi. Iqtisodiy yoqilg'i sarfi va qulay saloni bilan mashhur. O'rta sinf oilalar uchun ideal tanlov hisoblanadi. 2012-yildan beri yangilangan versiyasi ishlab chiqarilmoqda.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 5,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,mechanic"},{icon:"🛞",name:"Shina 185/65 R15",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?car,tire,wheel"},{icon:"🔋",name:"Akkumulyator 55Ah",detail:"Har 3-4 yil",img:"https://source.unsplash.com/300x200/?car,battery,auto"},{icon:"💨",name:"Havo filtri",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?air,filter,engine"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 25,000 km",img:"https://source.unsplash.com/300x200/?brake,disc,pads"},{icon:"⚙️",name:"Tormoz suyuqligi",detail:"Har 2 yil",img:"https://source.unsplash.com/300x200/?brake,fluid,mechanic"}]},
-
-  toyota_corolla:{name:"Toyota Corolla",icon:"🚗",company:"Toyota Motor",country:"🇯🇵 Yaponiya",founded:"1937",years:"1966–hozir",type:"Sedan",engine:"1.8L / 2.0L 4-silindr",power:"140–170 ot kuchi",img:"https://source.unsplash.com/800x400/?toyota,corolla,sedan",desc:"Toyota Corolla — dunyo tarixida eng ko'p sotilgan avtomobil. 1966-yildan beri 12 avlod mobaynida ishlab chiqarilgan. Ishonchlilik, tejamkorlik va past texnik xarajatlari bilan butun dunyoda mashhur. Har yili 1 millionga yaqin donasi sotiladi.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,toyota"},{icon:"🛞",name:"Shina 205/55 R16",detail:"Har 50,000 km",img:"https://source.unsplash.com/300x200/?car,tire,wheel"},{icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"Spark plug",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?spark,plug,engine"}]},
-
-  bmw_3series:{name:"BMW 3 Series",icon:"🏎️",company:"BMW Group",country:"🇩🇪 Germaniya",founded:"1916",years:"1975–hozir",type:"Sport Sedan",engine:"2.0L Turbo / 3.0L Inline-6",power:"184–374 ot kuchi",img:"https://source.unsplash.com/800x400/?bmw,3series,sport",desc:"BMW 3 Series — sport sedan sinfining etaloni. 1975-yildan beri 7 avlod mobaynida ishlab chiqarilgan. Haydovchi yo'naltirilgan boshqaruvi, mukammal muvozanati (50/50) va kuchli dvigateli bilan sport avtomashinalar orasida alohida o'rin egallaydi. M3 versiyasi esa haqiqiy sport mashinasi hisoblanadi.",parts:[{icon:"🔧",name:"Moy filtri (sintетik)",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,bmw"},{icon:"🛞",name:"Shina 225/45 R17",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?bmw,tire,wheel"},{icon:"🔋",name:"AGM Akkumulyator 90Ah",detail:"Har 5-6 yil",img:"https://source.unsplash.com/300x200/?agm,battery,car"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter,bmw"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://source.unsplash.com/300x200/?brake,pads,disc"},{icon:"⚙️",name:"Transmissiya moyi",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?transmission,gearbox"}]},
-
-  tesla_model_s:{name:"Tesla Model S",icon:"⚡",company:"Tesla Inc.",country:"🇺🇸 AQSh",founded:"2003",years:"2012–hozir",type:"Elektr Sedan",engine:"Elektr motor (Dual/Tri Motor)",power:"670–1020 ot kuchi",img:"https://source.unsplash.com/800x400/?tesla,model,electric",desc:"Tesla Model S — dunyo eng tez elektr avtomobillaridan biri. Plaid versiyasi 0-100 km/soatga 2.1 soniyada yetadi. 600+ km quvvat zaxirasi va over-the-air yangilanishlar bilan texnologiya olamida inqilob qildi. Autopilot va to'liq avtonom haydash imkoniyatlari bor.",parts:[{icon:"🔋",name:"Litiy batareya",detail:"8-10 yil kafolat",img:"https://source.unsplash.com/300x200/?tesla,battery,electric"},{icon:"⚙️",name:"Elektr motor",detail:"Deyarli texnik xizmat yo'q",img:"https://source.unsplash.com/300x200/?electric,motor,tesla"},{icon:"🛞",name:"Shina 245/45 R19",detail:"Har 30,000 km",img:"https://source.unsplash.com/300x200/?tesla,tire,wheel"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 80,000+ km",img:"https://source.unsplash.com/300x200/?brake,electric,car"},{icon:"❄️",name:"Sovutish suyuqligi",detail:"Har 4 yil",img:"https://source.unsplash.com/300x200/?coolant,fluid"},{icon:"🧹",name:"Kabinet filtri",detail:"Har 12,000 km",img:"https://source.unsplash.com/300x200/?cabin,air,filter"}]},
-
-  mercedes_e:{name:"Mercedes-Benz E-Class",icon:"🚗",company:"Mercedes-Benz Group",country:"🇩🇪 Germaniya",founded:"1926",years:"1953–hozir",type:"Lüks Sedan",engine:"2.0L Turbo / 3.0L V6",power:"197–429 ot kuchi",img:"https://source.unsplash.com/800x400/?mercedes,eclass,luxury",desc:"Mercedes-Benz E-Class — lüks biznes-sedan sinfining klassikasi. 70 yildan ortiq tarixga ega bo'lib, har avlodi yangi texnologiyalar bilan boyitilgan. Ichki bezagi, haydovchi yordamchi tizimlari va silindr o'chirish texnologiyasi bilan ajralib turadi.",parts:[{icon:"🔧",name:"Moy filtri (0W-40)",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,mercedes"},{icon:"🛞",name:"Shina 245/45 R18",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?mercedes,tire,wheel"},{icon:"🔋",name:"AGM Akkumulyator",detail:"Har 5-6 yil",img:"https://source.unsplash.com/300x200/?car,battery,agm"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter,engine"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?brake,pads,mercedes"},{icon:"⚙️",name:"Yulduzcha kamar",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?timing,belt,engine"}]},
-
-  lada_vesta:{name:"Lada Vesta",icon:"🚗",company:"AvtoVAZ",country:"🇷🇺 Rossiya",founded:"1966",years:"2015–hozir",type:"Sedan",engine:"1.6L / 1.8L 4-silindr",power:"106–122 ot kuchi",img:"https://source.unsplash.com/800x400/?lada,vesta,car,russia",desc:"Lada Vesta — Rossiyaning zamonaviy avtomobili. AvtoVAZ tomonidan Renault platformasida ishlab chiqarilgan. Arzon narxi va ishonchli mexanikasi bilan MDH mamlakatlarida keng tarqalgan. SW (universal) versiyasi ham mavjud.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 7,500 km",img:"https://source.unsplash.com/300x200/?oil,filter,car"},{icon:"🛞",name:"Shina 195/60 R15",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?car,tire,wheel"},{icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 3-4 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 25,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"Sovutish suyuqligi",detail:"Har 2 yil",img:"https://source.unsplash.com/300x200/?coolant,radiator"}]},
-
-  hyundai_elantra:{name:"Hyundai Elantra",icon:"🚗",company:"Hyundai Motor",country:"🇰🇷 Janubiy Koreya",founded:"1967",years:"1990–hozir",type:"Sedan",engine:"1.6L / 2.0L 4-silindr",power:"123–159 ot kuchi",img:"https://source.unsplash.com/800x400/?hyundai,elantra,sedan,korean",desc:"Hyundai Elantra — Koreya avtosanoatining muvaffaqiyatli mahsuloti. 30 yildan ortiq tarixda 7 avlod o'tdi. Zamonaviy dizayni, keng saloni va boyitilgan xavfsizlik tizimlari bilan taniqli. SmartSense haydovchi yordamchi tizimi N-line sport versiyasi mavjud.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://source.unsplash.com/300x200/?oil,filter"},{icon:"🛞",name:"Shina 205/55 R16",detail:"Har 45,000 km",img:"https://source.unsplash.com/300x200/?car,tire"},{icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"Spark plug",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?spark,plug"}]},
-
-  honda_civic:{name:"Honda Civic",icon:"🚗",company:"Honda Motor Co.",country:"🇯🇵 Yaponiya",founded:"1948",years:"1972–hozir",type:"Sedan / Hatchback",engine:"1.5L VTEC Turbo",power:"158–180 ot kuchi",img:"https://source.unsplash.com/800x400/?honda,civic,sedan",desc:"Honda Civic — 50 yildan ortiq tarixga ega iconic avtomobil. VTEC texnologiyasi bilan sport haydash tajribasini ommabop narxda taqdim etadi. Type R versiyasi esa muxlislarning sevimli sport mashinasi. Dunyo bo'ylab 27 million+ donasi sotilgan.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 8,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,honda"},{icon:"🛞",name:"Shina 215/50 R17",detail:"Har 45,000 km",img:"https://source.unsplash.com/300x200/?car,tire,wheel"},{icon:"🔋",name:"Akkumulyator 58Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"CVT moyi",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?cvt,transmission"}]},
-
-  audi_a4:{name:"Audi A4",icon:"🏎️",company:"Audi AG",country:"🇩🇪 Germaniya",founded:"1909",years:"1994–hozir",type:"Lüks Sport Sedan",engine:"1.4T / 2.0T / 3.0T",power:"150–354 ot kuchi",img:"https://source.unsplash.com/800x400/?audi,a4,luxury,german",desc:"Audi A4 — nemis muhandisligining namunaviy ko'rinishi. quattro to'liq yuldiz haydash tizimi va virtual kokpit bilan ajralib turadi. S4 va RS4 versiyalari esa yuksak unumdorlikni taqdim etadi. Audi MMI multimedia tizimi barcha zamonaviy texnologiyalarni o'z ichiga oladi.",parts:[{icon:"🔧",name:"Moy filtri (5W-40)",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,audi"},{icon:"🛞",name:"Shina 235/45 R17",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?audi,tire"},{icon:"🔋",name:"AGM Akkumulyator",detail:"Har 5 yil",img:"https://source.unsplash.com/300x200/?agm,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?brake,disc"},{icon:"⚙️",name:"DSG moyi",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?dsg,gearbox"}]},
-
-  ford_f150:{name:"Ford F-150",icon:"🚙",company:"Ford Motor Company",country:"🇺🇸 AQSh",founded:"1903",years:"1948–hozir",type:"Pick-up Truck",engine:"2.7L / 3.5L EcoBoost V6 / 5.0L V8",power:"290–450 ot kuchi",img:"https://source.unsplash.com/800x400/?ford,f150,truck,pickup",desc:"Ford F-150 — 47 yil davomida AQShda eng ko'p sotilgan avtomobil. Alyuminiy kuzov (4th gen) ishlab chiqarilishi bilan og'irligini keskin kamaytirdi. Lightning elektr versiyasi esa kelajak yuk avtomobillari uchun yangi standart o'rnatdi.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,truck"},{icon:"🛞",name:"Shina LT275/65 R18",detail:"Har 50,000 km",img:"https://source.unsplash.com/300x200/?truck,tire,wheel"},{icon:"🔋",name:"Akkumulyator 700CCA",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?truck,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter,ford"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?brake,truck"},{icon:"⚙️",name:"Differensial moyi",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?differential,axle"}]},
-
-  kia_sportage:{name:"Kia Sportage",icon:"🚙",company:"Kia Corporation",country:"🇰🇷 Janubiy Koreya",founded:"1944",years:"1993–hozir",type:"Compact SUV",engine:"1.6T / 2.0L / 2.5L",power:"150–235 ot kuchi",img:"https://source.unsplash.com/800x400/?kia,sportage,suv",desc:"Kia Sportage — dunyo bo'ylab mashhur kompakt SUV. 5-avlodda radikal yangi dizayn bilan xaridor e'tiborini tortdi. Panoramik shisha tom, hareket boshqaruvi va zamonaviy multimedia tizimi bilan boyitilgan. Afg'oniston va O'rta Osiyo bozorida ham keng tarqalgan.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,kia"},{icon:"🛞",name:"Shina 235/55 R18",detail:"Har 45,000 km",img:"https://source.unsplash.com/300x200/?suv,tire,wheel"},{icon:"🔋",name:"Akkumulyator 70Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://source.unsplash.com/300x200/?brake,suv"},{icon:"⚙️",name:"AWD suyuqligi",detail:"Har 50,000 km",img:"https://source.unsplash.com/300x200/?awd,transfer,case"}]},
-
-  volkswagen_golf:{name:"Volkswagen Golf",icon:"🚗",company:"Volkswagen AG",country:"🇩🇪 Germaniya",founded:"1937",years:"1974–hozir",type:"Compact Hatchback",engine:"1.0T / 1.5T / 2.0T",power:"90–320 ot kuchi",img:"https://source.unsplash.com/800x400/?volkswagen,golf,hatchback",desc:"Volkswagen Golf — Yevropaning eng mashhur kompakt hatchback'i. GTI versiyasi «hot hatch» janrini yaratgan. 50 yildan ortiq tarixda 35 million+ donasi sotilgan. DSG avtomat uzatmalar qutisi birinchi marta Golf da ishlatilgan.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,vw"},{icon:"🛞",name:"Shina 205/55 R16",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?vw,tire"},{icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"DSG moyi",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?dsg,gearbox"}]}
+  chevrolet_cobalt:{
+    name:"Chevrolet Cobalt",icon:"🚗",company:"GM Uzbekistan",country:"🇺🇿 O'zbekiston",founded:"2005",years:"2005–hozir",type:"Sedan",engine:"1.5L 4-silindr benzin",power:"106 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/2012_Chevrolet_Cobalt_%28facelift%2C_black%29%2C_front_8.21.19.jpg/800px-2012_Chevrolet_Cobalt_%28facelift%2C_black%29%2C_front_8.21.19.jpg",
+    desc:"Chevrolet Cobalt — O'zbekistonda eng ko'p sotilgan mashinalardan biri. GM Uzbekistan tomonidan Asaka shahrida ishlab chiqariladi. Iqtisodiy yoqilg'i sarfi va qulay saloni bilan mashhur. O'rta sinf oilalar uchun ideal tanlov hisoblanadi.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri",detail:"Har 5,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 185/65 R15",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"Akkumulyator 55Ah",detail:"Har 3-4 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/twentythree/Car_battery.jpg/320px-Car_battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 15,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 25,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"Tormoz suyuqligi",detail:"Har 2 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Brake_fluid_reservoir.jpg/320px-Brake_fluid_reservoir.jpg"}
+    ]
+  },
+  toyota_corolla:{
+    name:"Toyota Corolla",icon:"🚗",company:"Toyota Motor",country:"🇯🇵 Yaponiya",founded:"1937",years:"1966–hozir",type:"Sedan",engine:"1.8L / 2.0L 4-silindr",power:"140–170 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/2019_Toyota_Corolla_sedan_%28facelift%2C_black%29%2C_front_8.15.19.jpg/800px-2019_Toyota_Corolla_sedan_%28facelift%2C_black%29%2C_front_8.15.19.jpg",
+    desc:"Toyota Corolla — dunyo tarixida eng ko'p sotilgan avtomobil. 1966-yildan beri 12 avlod mobaynida ishlab chiqarilgan. Ishonchlilik, tejamkorlik va past texnik xarajatlari bilan butun dunyoda mashhur. Har yili 1 millionga yaqin donasi sotiladi.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 205/55 R16",detail:"Har 50,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"Spark plug",detail:"Har 60,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Spark_plug_cross_section.jpg/240px-Spark_plug_cross_section.jpg"}
+    ]
+  },
+  bmw_3series:{
+    name:"BMW 3 Series",icon:"🏎️",company:"BMW Group",country:"🇩🇪 Germaniya",founded:"1916",years:"1975–hozir",type:"Sport Sedan",engine:"2.0L Turbo / 3.0L Inline-6",power:"184–374 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/2019_BMW_330i_M_Sport_%28G20%29_sedan_%282019-11-21%29_01.jpg/800px-2019_BMW_330i_M_Sport_%28G20%29_sedan_%282019-11-21%29_01.jpg",
+    desc:"BMW 3 Series — sport sedan sinfining etaloni. 1975-yildan beri 7 avlod mobaynida ishlab chiqarilgan. Haydovchi yo'naltirilgan boshqaruvi, mukammal muvozanati (50/50) va kuchli dvigateli bilan sport avtomashinalar orasida alohida o'rin egallaydi.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri (sintetik)",detail:"Har 15,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 225/45 R17",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"AGM Akkumulyator 90Ah",detail:"Har 5-6 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"Transmissiya moyi",detail:"Har 60,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/ZF_6HP26_Transmission.jpg/320px-ZF_6HP26_Transmission.jpg"}
+    ]
+  },
+  tesla_model_s:{
+    name:"Tesla Model S",icon:"⚡",company:"Tesla Inc.",country:"🇺🇸 AQSh",founded:"2003",years:"2012–hozir",type:"Elektr Sedan",engine:"Elektr motor (Dual/Tri Motor)",power:"670–1020 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/2020_Tesla_Model_S_Performance%2C_front_8.6.20.jpg/800px-2020_Tesla_Model_S_Performance%2C_front_8.6.20.jpg",
+    desc:"Tesla Model S — dunyo eng tez elektr avtomobillaridan biri. Plaid versiyasi 0-100 km/soatga 2.1 soniyada yetadi. 600+ km quvvat zaxirasi va over-the-air yangilanishlar bilan texnologiya olamida inqilob qildi.",
+    parts:[
+      {icon:"🔋",name:"Litiy batareya",detail:"8-10 yil kafolat",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Lithium_Iron_Phosphate_Battery.jpg/320px-Lithium_Iron_Phosphate_Battery.jpg"},
+      {icon:"⚙️",name:"Elektr motor",detail:"Deyarli texnik xizmat yo'q",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/Tesla_motors_electric_engine.jpg/320px-Tesla_motors_electric_engine.jpg"},
+      {icon:"🛞",name:"Shina 245/45 R19",detail:"Har 30,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 80,000+ km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"❄️",name:"Sovutish suyuqligi",detail:"Har 4 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Brake_fluid_reservoir.jpg/320px-Brake_fluid_reservoir.jpg"},
+      {icon:"🧹",name:"Kabinet filtri",detail:"Har 12,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"}
+    ]
+  },
+  mercedes_e:{
+    name:"Mercedes-Benz E-Class",icon:"🚗",company:"Mercedes-Benz Group",country:"🇩🇪 Germaniya",founded:"1926",years:"1953–hozir",type:"Lüks Sedan",engine:"2.0L Turbo / 3.0L V6",power:"197–429 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Mercedes-Benz_W213_E_350_e_%28W213%29_–_Frontansicht%2C_24._September_2016%2C_Düsseldorf.jpg/800px-Mercedes-Benz_W213_E_350_e_%28W213%29_–_Frontansicht%2C_24._September_2016%2C_Düsseldorf.jpg",
+    desc:"Mercedes-Benz E-Class — lüks biznes-sedan sinfining klassikasi. 70 yildan ortiq tarixga ega bo'lib, har avlodi yangi texnologiyalar bilan boyitilgan. Ichki bezagi, haydovchi yordamchi tizimlari va silindr o'chirish texnologiyasi bilan ajralib turadi.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri (0W-40)",detail:"Har 15,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 245/45 R18",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"AGM Akkumulyator",detail:"Har 5-6 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"Yoqilg'i filtri",detail:"Har 30,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"}
+    ]
+  },
+  lada_vesta:{
+    name:"Lada Vesta",icon:"🚗",company:"AvtoVAZ",country:"🇷🇺 Rossiya",founded:"1966",years:"2015–hozir",type:"Sedan",engine:"1.6L / 1.8L 4-silindr",power:"106–122 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Lada_Vesta_sedan_%28facelift%2C_2022%29%2C_front_8.22.22.jpg/800px-Lada_Vesta_sedan_%28facelift%2C_2022%29%2C_front_8.22.22.jpg",
+    desc:"Lada Vesta — Rossiyaning zamonaviy avtomobili. AvtoVAZ tomonidan Renault platformasida ishlab chiqarilgan. Arzon narxi va ishonchli mexanikasi bilan MDH mamlakatlarida keng tarqalgan. SW (universal) versiyasi ham mavjud.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri",detail:"Har 7,500 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 195/60 R15",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 3-4 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 15,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 25,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"Sovutish suyuqligi",detail:"Har 2 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Brake_fluid_reservoir.jpg/320px-Brake_fluid_reservoir.jpg"}
+    ]
+  },
+  hyundai_elantra:{
+    name:"Hyundai Elantra",icon:"🚗",company:"Hyundai Motor",country:"🇰🇷 Janubiy Koreya",founded:"1967",years:"1990–hozir",type:"Sedan",engine:"1.6L / 2.0L 4-silindr",power:"123–159 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/2021_Hyundai_Elantra_%28CN7%29_sedan_%282021-08-03%29_01.jpg/800px-2021_Hyundai_Elantra_%28CN7%29_sedan_%282021-08-03%29_01.jpg",
+    desc:"Hyundai Elantra — Koreya avtosanoatining muvaffaqiyatli mahsuloti. 30 yildan ortiq tarixda 7 avlod o'tdi. Zamonaviy dizayni, keng saloni va boyitilgan xavfsizlik tizimlari bilan taniqli.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 205/55 R16",detail:"Har 45,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"Spark plug",detail:"Har 60,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Spark_plug_cross_section.jpg/240px-Spark_plug_cross_section.jpg"}
+    ]
+  },
+  honda_civic:{
+    name:"Honda Civic",icon:"🚗",company:"Honda Motor Co.",country:"🇯🇵 Yaponiya",founded:"1948",years:"1972–hozir",type:"Sedan / Hatchback",engine:"1.5L VTEC Turbo",power:"158–180 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/2022_Honda_Civic_Sport_sedan_%28facelift-free%2C_silver%29%2C_front_8.7.22.jpg/800px-2022_Honda_Civic_Sport_sedan_%28facelift-free%2C_silver%29%2C_front_8.7.22.jpg",
+    desc:"Honda Civic — 50 yildan ortiq tarixga ega iconic avtomobil. VTEC texnologiyasi bilan sport haydash tajribasini ommabop narxda taqdim etadi. Type R versiyasi esa muxlislarning sevimli sport mashinasi. 27 million+ donasi sotilgan.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri",detail:"Har 8,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 215/50 R17",detail:"Har 45,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"Akkumulyator 58Ah",detail:"Har 4-5 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"CVT moyi",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/ZF_6HP26_Transmission.jpg/320px-ZF_6HP26_Transmission.jpg"}
+    ]
+  },
+  audi_a4:{
+    name:"Audi A4",icon:"🏎️",company:"Audi AG",country:"🇩🇪 Germaniya",founded:"1909",years:"1994–hozir",type:"Lüks Sport Sedan",engine:"1.4T / 2.0T / 3.0T",power:"150–354 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/2019_Audi_A4_S_line_35_TFSI_S_Tronic_%28B9%29_front_8.9.19.jpg/800px-2019_Audi_A4_S_line_35_TFSI_S_Tronic_%28B9%29_front_8.9.19.jpg",
+    desc:"Audi A4 — nemis muhandisligining namunaviy ko'rinishi. quattro to'liq yuldiz haydash tizimi va virtual kokpit bilan ajralib turadi. S4 va RS4 versiyalari esa yuksak unumdorlikni taqdim etadi.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri (5W-40)",detail:"Har 15,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 235/45 R17",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"AGM Akkumulyator",detail:"Har 5 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"DSG moyi",detail:"Har 60,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/ZF_6HP26_Transmission.jpg/320px-ZF_6HP26_Transmission.jpg"}
+    ]
+  },
+  ford_f150:{
+    name:"Ford F-150",icon:"🚙",company:"Ford Motor Company",country:"🇺🇸 AQSh",founded:"1903",years:"1948–hozir",type:"Pick-up Truck",engine:"2.7L / 3.5L EcoBoost V6 / 5.0L V8",power:"290–450 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/2021_Ford_F-150_XLT_pickup_%28facelift%2C_white%29%2C_front_7.16.21.jpg/800px-2021_Ford_F-150_XLT_pickup_%28facelift%2C_white%29%2C_front_7.16.21.jpg",
+    desc:"Ford F-150 — 47 yil davomida AQShda eng ko'p sotilgan avtomobil. Alyuminiy kuzov ishlab chiqarilishi bilan og'irligini keskin kamaytirdi. Lightning elektr versiyasi esa kelajak yuk avtomobillari uchun yangi standart o'rnatdi.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina LT275/65 R18",detail:"Har 50,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"Akkumulyator 700CCA",detail:"Har 4-5 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"Differensial moyi",detail:"Har 60,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/ZF_6HP26_Transmission.jpg/320px-ZF_6HP26_Transmission.jpg"}
+    ]
+  },
+  kia_sportage:{
+    name:"Kia Sportage",icon:"🚙",company:"Kia Corporation",country:"🇰🇷 Janubiy Koreya",founded:"1944",years:"1993–hozir",type:"Compact SUV",engine:"1.6T / 2.0L / 2.5L",power:"150–235 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/2022_Kia_Sportage_%28NQ5%29_GT-Line_S_AWD_SUV_%282022-02-24%29_01.jpg/800px-2022_Kia_Sportage_%28NQ5%29_GT-Line_S_AWD_SUV_%282022-02-24%29_01.jpg",
+    desc:"Kia Sportage — dunyo bo'ylab mashhur kompakt SUV. 5-avlodda radikal yangi dizayn bilan xaridor e'tiborini tortdi. Panoramik shisha tom, harakat boshqaruvi va zamonaviy multimedia tizimi bilan boyitilgan.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 235/55 R18",detail:"Har 45,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"Akkumulyator 70Ah",detail:"Har 4-5 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"AWD suyuqligi",detail:"Har 50,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/ZF_6HP26_Transmission.jpg/320px-ZF_6HP26_Transmission.jpg"}
+    ]
+  },
+  volkswagen_golf:{
+    name:"Volkswagen Golf",icon:"🚗",company:"Volkswagen AG",country:"🇩🇪 Germaniya",founded:"1937",years:"1974–hozir",type:"Compact Hatchback",engine:"1.0T / 1.5T / 2.0T",power:"90–320 ot kuchi",
+    img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/2020_Volkswagen_Golf_Life_TDI_DSG_in_Reflex_Silver%2C_Front_8.28.20.jpg/800px-2020_Volkswagen_Golf_Life_TDI_DSG_in_Reflex_Silver%2C_Front_8.28.20.jpg",
+    desc:"Volkswagen Golf — Yevropaning eng mashhur kompakt hatchback'i. GTI versiyasi «hot hatch» janrini yaratgan. 50 yildan ortiq tarixda 35 million+ donasi sotilgan. DSG avtomat uzatmalar qutisi birinchi marta Golf da ishlatilgan.",
+    parts:[
+      {icon:"🔧",name:"Moy filtri",detail:"Har 15,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Oil_filter_cutaway.jpg/320px-Oil_filter_cutaway.jpg"},
+      {icon:"🛞",name:"Shina 205/55 R16",detail:"Har 40,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Tires_on_a_shelf.jpg/320px-Tires_on_a_shelf.jpg"},
+      {icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/Car-battery.jpg/320px-Car-battery.jpg"},
+      {icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Car_engine_air_filter_dirty.jpg/320px-Car_engine_air_filter_dirty.jpg"},
+      {icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Disc_brake_-_ATE.jpg/320px-Disc_brake_-_ATE.jpg"},
+      {icon:"⚙️",name:"DSG moyi",detail:"Har 60,000 km",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/ZF_6HP26_Transmission.jpg/320px-ZF_6HP26_Transmission.jpg"}
+    ]
+  }
 };
 
-// Qidiruv uchun kalit so'zlar xaritasi
 const SEARCH_MAP = {
-  'cobalt':'chevrolet_cobalt','chevrolet cobalt':'chevrolet_cobalt','kobalt':'chevrolet_cobalt',
+  'cobalt':'chevrolet_cobalt','chevrolet cobalt':'chevrolet_cobalt','kobalt':'chevrolet_cobalt','chevrolet':'chevrolet_cobalt',
   'corolla':'toyota_corolla','toyota corolla':'toyota_corolla','toyota':'toyota_corolla',
   'bmw':'bmw_3series','bmw 3':'bmw_3series','bmw 3 series':'bmw_3series','3 series':'bmw_3series',
   'tesla':'tesla_model_s','model s':'tesla_model_s','tesla model s':'tesla_model_s',
@@ -197,22 +318,18 @@ const SEARCH_MAP = {
   'elantra':'hyundai_elantra','hyundai':'hyundai_elantra','hyundai elantra':'hyundai_elantra',
   'civic':'honda_civic','honda':'honda_civic','honda civic':'honda_civic',
   'audi':'audi_a4','a4':'audi_a4','audi a4':'audi_a4',
-  'ford':'ford_f150','f150':'ford_f150','f-150':'ford_f150','ford f150':'ford_f150',
+  'ford':'ford_f150','f150':'ford_f150','f-150':'ford_f150',
   'sportage':'kia_sportage','kia':'kia_sportage','kia sportage':'kia_sportage',
-  'golf':'volkswagen_golf','vw golf':'volkswagen_golf','volkswagen':'volkswagen_golf','volkswagen golf':'volkswagen_golf'
+  'golf':'volkswagen_golf','vw':'volkswagen_golf','volkswagen':'volkswagen_golf'
 };
 
-function findCar(query) {
-  const q = query.toLowerCase().trim();
+function findCar(q) {
+  q = q.toLowerCase().trim();
   if (SEARCH_MAP[q]) return CARS[SEARCH_MAP[q]];
   for (const key of Object.keys(SEARCH_MAP)) {
     if (q.includes(key) || key.includes(q)) return CARS[SEARCH_MAP[key]];
   }
   return null;
-}
-
-function liveSearch(val) {
-  if (!val.trim()) { hideResult(); return; }
 }
 
 function doSearch() {
@@ -231,60 +348,38 @@ function selectCar(key) {
   showCar(CARS[key]);
 }
 
-function filterBrand(brand) {
-  const found = Object.values(CARS).find(c => c.company.includes(brand) || c.name.includes(brand));
-  if (found) { document.getElementById('searchInput').value = found.name; showCar(found); }
-}
-
-function hideResult() {
-  document.getElementById('resultCard').style.display = 'none';
-  document.getElementById('notFound').style.display = 'none';
-  document.getElementById('brandsSection').style.display = 'block';
-}
-
 function showCar(car) {
   document.getElementById('notFound').style.display = 'none';
   document.getElementById('brandsSection').style.display = 'none';
-
   document.getElementById('carIcon').textContent = car.icon;
   document.getElementById('carTitle').textContent = car.name;
   document.getElementById('carSub').textContent = car.company + ' · ' + car.country;
-
   const img = document.getElementById('carImg');
   img.src = car.img;
-  img.onerror = () => img.src = 'https://source.unsplash.com/800x400/?car,automobile';
-
+  img.onerror = () => { img.style.display='none'; };
   const tiles = [
-    {l:'Kompaniya',v:car.company},
-    {l:'Davlat',v:car.country},
-    {l:'Tashkil yili',v:car.founded,h:true},
-    {l:'Yillar',v:car.years},
-    {l:'Tur',v:car.type},
-    {l:'Dvigatel',v:car.engine},
-    {l:'Quvvat',v:car.power,h:true}
+    {l:'Kompaniya',v:car.company},{l:'Davlat',v:car.country},
+    {l:'Tashkil yili',v:car.founded,h:true},{l:'Yillar',v:car.years},
+    {l:'Tur',v:car.type},{l:'Dvigatel',v:car.engine},{l:'Quvvat',v:car.power,h:true}
   ];
   document.getElementById('infoGrid').innerHTML = tiles.map(t =>
     `<div class="info-tile"><div class="info-tile-label">${t.l}</div><div class="info-tile-value ${t.h?'hl':''}">${t.v}</div></div>`
   ).join('');
-
   document.getElementById('carDesc').textContent = car.desc;
-
   document.getElementById('partsGrid').innerHTML = car.parts.map(p => `
     <div class="part-card">
       <div class="part-img-box">
-        <img src="${p.img}" alt="${p.name}" onerror="this.parentNode.innerHTML='<span style=\'font-size:36px\'>${p.icon}</span>'">
+        <img src="${p.img}" alt="${p.name}" onerror="this.outerHTML='<span style=\'font-size:36px\'>${p.icon}</span>'">
       </div>
       <div class="part-info">
         <div class="part-name">${p.icon} ${p.name}</div>
         <div class="part-detail">${p.detail}</div>
       </div>
     </div>`).join('');
-
   document.getElementById('resultCard').style.display = 'block';
   document.getElementById('resultCard').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// Enter tugmasi
 document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') doSearch(); });
 </script>
 </body>

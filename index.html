@@ -6,553 +6,286 @@
 <title>CarWorld — Dunyo Mashinalari</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap');
-
   :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --card: #1a1a26;
-    --border: #2a2a3e;
-    --accent: #e8401a;
-    --accent2: #ff6b35;
-    --text: #e8e8f0;
-    --muted: #7070a0;
-    --glow: rgba(232, 64, 26, 0.3);
+    --bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--border:#2a2a3e;
+    --accent:#e8401a;--accent2:#ff6b35;--text:#e8e8f0;--muted:#7070a0;--glow:rgba(232,64,26,0.3);
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-  }
-
-  header {
-    background: linear-gradient(135deg, #0a0a0f 0%, #1a0a05 50%, #0a0a0f 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 20px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(10px);
-  }
-
-  .header-inner {
-    max-width: 960px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .logo {
-    font-family: 'Orbitron', monospace;
-    font-size: 22px;
-    font-weight: 900;
-    color: var(--accent);
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px var(--glow);
-  }
-  .logo span { color: var(--text); }
-  .tagline {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-left: auto;
-  }
-
-  .hero {
-    background: radial-gradient(ellipse at 50% 0%, rgba(232,64,26,0.15) 0%, transparent 70%);
-    padding: 36px 20px 28px;
-    text-align: center;
-  }
-
-  .hero h1 {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(22px, 5vw, 38px);
-    font-weight: 900;
-    line-height: 1.15;
-    margin-bottom: 10px;
-  }
-  .hero h1 em { font-style: normal; color: var(--accent); text-shadow: 0 0 30px var(--glow); }
-  .hero p { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
-
-  .search-wrap { max-width: 600px; margin: 0 auto; position: relative; }
-  .search-input {
-    width: 100%;
-    background: var(--card);
-    border: 2px solid var(--border);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 15px;
-    padding: 14px 110px 14px 18px;
-    border-radius: 12px;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  .search-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
-  .search-input::placeholder { color: var(--muted); }
-
-  .search-btn {
-    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
-    background: var(--accent); color: white; border: none;
-    font-family: 'Orbitron', monospace; font-size: 12px; font-weight: 700;
-    padding: 10px 16px; border-radius: 8px; cursor: pointer; letter-spacing: 1px;
-    transition: background 0.2s, box-shadow 0.2s;
-  }
-  .search-btn:hover { background: var(--accent2); box-shadow: 0 0 20px var(--glow); }
-  .search-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
-  .quick-tags {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    justify-content: center; margin-top: 14px;
-  }
-  .tag {
-    background: var(--card); border: 1px solid var(--border);
-    color: var(--muted); font-size: 12px; padding: 5px 12px;
-    border-radius: 20px; cursor: pointer; transition: all 0.2s;
-  }
-  .tag:hover { border-color: var(--accent); color: var(--accent); }
-
-  .stats-bar {
-    display: flex; justify-content: center; gap: 30px;
-    padding: 18px; border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    background: var(--surface); flex-wrap: wrap;
-  }
-  .stat { text-align: center; }
-  .stat-num { font-family: 'Orbitron', monospace; font-size: 20px; font-weight: 700; color: var(--accent); }
-  .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-
-  .result-area { max-width: 960px; margin: 0 auto; padding: 24px 16px; }
-
-  .loading { display: none; text-align: center; padding: 40px; }
-  .spinner {
-    width: 48px; height: 48px;
-    border: 3px solid var(--border); border-top-color: var(--accent);
-    border-radius: 50%; animation: spin 0.8s linear infinite;
-    margin: 0 auto 16px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading p { color: var(--muted); font-size: 13px; font-family: 'Orbitron', monospace; letter-spacing: 2px; }
-
-  .error-msg {
-    display: none;
-    background: rgba(232,64,26,0.1); border: 1px solid rgba(232,64,26,0.3);
-    border-radius: 10px; padding: 16px; color: var(--accent2);
-    text-align: center; font-size: 14px;
-  }
-
-  /* ===== RESULT CARD ===== */
-  .result-card { display: none; }
-
-  /* CAR IMAGE BANNER */
-  .car-banner {
-    position: relative;
-    width: 100%; height: 220px;
-    border-radius: 16px 16px 0 0;
-    overflow: hidden;
-    background: var(--surface);
-  }
-  .car-banner-img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-  .car-banner:hover .car-banner-img { transform: scale(1.04); }
-  .car-banner-overlay {
-    position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(10,10,15,0.9) 0%, rgba(10,10,15,0.2) 60%, transparent 100%);
-  }
-  .car-banner-info {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 16px 20px;
-    display: flex; align-items: flex-end; gap: 14px;
-  }
-  .car-banner-icon { font-size: 36px; line-height: 1; }
-  .car-banner-text {}
-  .car-title {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(16px, 4vw, 26px);
-    font-weight: 900;
-    color: white;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-  }
-  .car-subtitle { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 3px; }
-
-  .car-img-loading {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--surface);
-  }
-  .car-img-loading-spin {
-    width: 32px; height: 32px;
-    border: 2px solid var(--border); border-top-color: var(--accent);
-    border-radius: 50%; animation: spin 0.7s linear infinite;
-  }
-
-  /* BODY */
-  .result-body {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-top: none;
-    border-radius: 0 0 16px 16px;
-    padding: 20px;
-  }
-
-  .info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px; margin-bottom: 20px;
-  }
-  .info-tile {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 12px;
-  }
-  .info-tile-label {
-    font-size: 10px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 5px;
-  }
-  .info-tile-value { font-size: 13px; font-weight: 600; color: var(--text); }
-  .info-tile-value.highlight { color: var(--accent); font-family: 'Orbitron', monospace; }
-
-  .section-title {
-    font-family: 'Orbitron', monospace;
-    font-size: 11px; font-weight: 700; color: var(--accent);
-    letter-spacing: 2px; text-transform: uppercase;
-    margin-bottom: 12px; padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .ai-response {
-    font-size: 14px; line-height: 1.7;
-    color: #c0c0d8; white-space: pre-wrap;
-    margin-bottom: 20px;
-  }
-
-  /* PARTS WITH IMAGES */
-  .parts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 12px;
-  }
-
-  .part-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: border-color 0.2s, transform 0.2s;
-    cursor: default;
-  }
-  .part-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-2px);
-  }
-
-  .part-img-wrap {
-    width: 100%; height: 100px;
-    background: #0e0e18;
-    position: relative; overflow: hidden;
-  }
-  .part-img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s;
-  }
-  .part-card:hover .part-img { transform: scale(1.05); }
-  .part-img-placeholder {
-    width: 100%; height: 100%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 36px; background: #0e0e18;
-  }
-  .part-img-loading-wrap {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background: #0e0e18;
-  }
-  .part-img-spin {
-    width: 24px; height: 24px;
-    border: 2px solid var(--border); border-top-color: var(--accent);
-    border-radius: 50%; animation: spin 0.7s linear infinite;
-  }
-
-  .part-info { padding: 10px 12px; }
-  .part-name { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-  .part-detail { font-size: 11px; color: var(--muted); }
-
-  /* POPULAR BRANDS */
-  .popular-section { padding: 28px 16px; max-width: 960px; margin: 0 auto; }
-  .section-header {
-    font-family: 'Orbitron', monospace;
-    font-size: 13px; font-weight: 700; color: var(--muted);
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px;
-  }
-  .brand-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; }
-  .brand-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 10px; padding: 14px 10px; text-align: center;
-    cursor: pointer; transition: all 0.25s;
-  }
-  .brand-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(232,64,26,0.15); }
-  .brand-logo { font-size: 26px; margin-bottom: 5px; }
-  .brand-name { font-size: 12px; font-weight: 600; color: var(--text); }
-  .brand-country { font-size: 10px; color: var(--muted); margin-top: 2px; }
-
-  footer { text-align: center; padding: 28px 20px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--border); }
-  footer span { color: var(--accent); }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh;}
+  header{background:linear-gradient(135deg,#0a0a0f,#1a0a05,#0a0a0f);border-bottom:1px solid var(--border);padding:16px 20px;position:sticky;top:0;z-index:100;}
+  .header-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;gap:12px;}
+  .logo{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;color:var(--accent);letter-spacing:2px;text-shadow:0 0 20px var(--glow);}
+  .logo span{color:var(--text);}
+  .tagline{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-left:auto;}
+  .hero{background:radial-gradient(ellipse at 50% 0%,rgba(232,64,26,0.15) 0%,transparent 70%);padding:36px 20px 28px;text-align:center;}
+  .hero h1{font-family:'Orbitron',monospace;font-size:clamp(20px,5vw,36px);font-weight:900;line-height:1.15;margin-bottom:10px;}
+  .hero h1 em{font-style:normal;color:var(--accent);text-shadow:0 0 30px var(--glow);}
+  .hero p{color:var(--muted);font-size:13px;margin-bottom:20px;}
+  .search-wrap{max-width:600px;margin:0 auto;position:relative;}
+  .search-input{width:100%;background:var(--card);border:2px solid var(--border);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;padding:14px 110px 14px 18px;border-radius:12px;outline:none;transition:border-color .3s,box-shadow .3s;}
+  .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow);}
+  .search-input::placeholder{color:var(--muted);}
+  .search-btn{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--accent);color:white;border:none;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;padding:10px 16px;border-radius:8px;cursor:pointer;letter-spacing:1px;transition:background .2s;}
+  .search-btn:hover{background:var(--accent2);}
+  .quick-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:14px;}
+  .tag{background:var(--card);border:1px solid var(--border);color:var(--muted);font-size:12px;padding:5px 12px;border-radius:20px;cursor:pointer;transition:all .2s;}
+  .tag:hover,.tag.active{border-color:var(--accent);color:var(--accent);}
+  .stats-bar{display:flex;justify-content:center;gap:30px;padding:18px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--surface);flex-wrap:wrap;}
+  .stat{text-align:center;}
+  .stat-num{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--accent);}
+  .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+  .main{max-width:960px;margin:0 auto;padding:24px 16px;}
+  .not-found{display:none;text-align:center;padding:40px 20px;color:var(--muted);}
+  .not-found .nf-icon{font-size:48px;margin-bottom:12px;}
+  .not-found p{font-size:14px;}
+  /* RESULT */
+  .result-card{display:none;}
+  .car-banner{position:relative;width:100%;height:220px;border-radius:16px 16px 0 0;overflow:hidden;background:var(--surface);}
+  .car-banner img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+  .car-banner:hover img{transform:scale(1.04);}
+  .car-banner-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,15,.9) 0%,rgba(10,10,15,.2) 60%,transparent 100%);}
+  .car-banner-info{position:absolute;bottom:0;left:0;right:0;padding:16px 20px;display:flex;align-items:flex-end;gap:14px;}
+  .car-icon-big{font-size:38px;line-height:1;}
+  .car-title{font-family:'Orbitron',monospace;font-size:clamp(16px,4vw,26px);font-weight:900;color:white;text-shadow:0 2px 8px rgba(0,0,0,.8);}
+  .car-subtitle{font-size:12px;color:rgba(255,255,255,.65);margin-top:3px;}
+  .result-body{background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 16px 16px;padding:20px;}
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
+  .info-tile{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;}
+  .info-tile-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px;}
+  .info-tile-value{font-size:13px;font-weight:600;color:var(--text);}
+  .info-tile-value.hl{color:var(--accent);font-family:'Orbitron',monospace;}
+  .sec-title{font-family:'Orbitron',monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+  .ai-desc{font-size:14px;line-height:1.7;color:#c0c0d8;margin-bottom:20px;}
+  .parts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;}
+  .part-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s,transform .2s;}
+  .part-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+  .part-img-box{width:100%;height:95px;overflow:hidden;background:#0e0e18;display:flex;align-items:center;justify-content:center;font-size:36px;}
+  .part-img-box img{width:100%;height:100%;object-fit:cover;}
+  .part-info{padding:10px 12px;}
+  .part-name{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
+  .part-detail{font-size:11px;color:var(--muted);}
+  /* BRANDS */
+  .brands-section{margin-top:32px;}
+  .sec-header{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;}
+  .brand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;}
+  .brand-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .25s;}
+  .brand-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px rgba(232,64,26,.15);}
+  .brand-flag{font-size:26px;margin-bottom:5px;}
+  .brand-name{font-size:12px;font-weight:600;color:var(--text);}
+  .brand-country{font-size:10px;color:var(--muted);margin-top:2px;}
+  footer{text-align:center;padding:28px 20px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);}
+  footer span{color:var(--accent);}
 </style>
 </head>
 <body>
-
 <header>
   <div class="header-inner">
     <div class="logo">CAR<span>WORLD</span></div>
-    <div class="tagline">🌍 Dunyo Mashinalari Ensiklopediyasi</div>
+    <div class="tagline">🌍 Dunyo Mashinalari</div>
   </div>
 </header>
 
 <div class="hero">
-  <h1>Dunyo Mashinalari<br>haqida <em>AI</em> ma'lumot</h1>
-  <p>Istalgan moshina — rasm, kompaniya, yil, zapchastlar bilan</p>
+  <h1>Dunyo Mashinalari<br>haqida <em>to'liq</em> ma'lumot</h1>
+  <p>Kompaniya · Yil · Dvigatel · Zapchastlar · Rasm</p>
   <div class="search-wrap">
-    <input class="search-input" id="searchInput" type="text"
-      placeholder="Masalan: Toyota Camry, BMW M5, GAZ 21..."
-      onkeydown="if(event.key==='Enter') search()">
-    <button class="search-btn" id="searchBtn" onclick="search()">IZLA</button>
+    <input class="search-input" id="searchInput" type="text" placeholder="Moshina nomi kiriting..." onkeyup="liveSearch(this.value)">
+    <button class="search-btn" onclick="doSearch()">IZLA</button>
   </div>
-  <div class="quick-tags">
-    <div class="tag" onclick="quickSearch('Toyota Corolla')">🇯🇵 Toyota Corolla</div>
-    <div class="tag" onclick="quickSearch('BMW 3 Series')">🇩🇪 BMW 3 Series</div>
-    <div class="tag" onclick="quickSearch('Tesla Model S')">🇺🇸 Tesla Model S</div>
-    <div class="tag" onclick="quickSearch('Chevrolet Cobalt')">🇺🇿 Cobalt</div>
-    <div class="tag" onclick="quickSearch('Mercedes E-Class')">🇩🇪 Mercedes E</div>
-    <div class="tag" onclick="quickSearch('Lada Vesta')">🇷🇺 Lada Vesta</div>
+  <div class="quick-tags" id="quickTags">
+    <div class="tag" onclick="selectCar('chevrolet_cobalt')">🇺🇿 Cobalt</div>
+    <div class="tag" onclick="selectCar('toyota_corolla')">🇯🇵 Corolla</div>
+    <div class="tag" onclick="selectCar('bmw_3series')">🇩🇪 BMW 3</div>
+    <div class="tag" onclick="selectCar('tesla_model_s')">🇺🇸 Tesla S</div>
+    <div class="tag" onclick="selectCar('mercedes_e')">🇩🇪 Mercedes E</div>
+    <div class="tag" onclick="selectCar('lada_vesta')">🇷🇺 Lada Vesta</div>
+    <div class="tag" onclick="selectCar('hyundai_elantra')">🇰🇷 Elantra</div>
+    <div class="tag" onclick="selectCar('honda_civic')">🇯🇵 Civic</div>
   </div>
 </div>
 
 <div class="stats-bar">
-  <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Brend</div></div>
-  <div class="stat"><div class="stat-num">100+</div><div class="stat-label">Davlat</div></div>
-  <div class="stat"><div class="stat-num">1886</div><div class="stat-label">Dan buyon</div></div>
-  <div class="stat"><div class="stat-num">AI</div><div class="stat-label">Powered</div></div>
+  <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Moshina</div></div>
+  <div class="stat"><div class="stat-num">20+</div><div class="stat-label">Brend</div></div>
+  <div class="stat"><div class="stat-num">15+</div><div class="stat-label">Davlat</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Bepul</div></div>
 </div>
 
-<div class="result-area">
-  <div class="loading" id="loading">
-    <div class="spinner"></div>
-    <p>AI IZLAYAPTI...</p>
+<div class="main">
+  <div class="not-found" id="notFound">
+    <div class="nf-icon">🔍</div>
+    <p>Moshina topilmadi. Boshqa nom bilan urinib ko'ring.</p>
   </div>
-  <div class="error-msg" id="errorMsg">⚠️ Xatolik yuz berdi. Qayta urinib ko'ring.</div>
 
   <div class="result-card" id="resultCard">
-    <!-- Car image banner -->
-    <div class="car-banner" id="carBanner">
-      <div class="car-img-loading" id="carImgLoading">
-        <div class="car-img-loading-spin"></div>
-      </div>
-      <img class="car-banner-img" id="carBannerImg" src="" alt="" style="display:none"
-           onerror="this.style.display='none'; document.getElementById('carImgLoading').innerHTML='<span style=\'font-size:60px\'>🚗</span>'">
+    <div class="car-banner">
+      <img id="carImg" src="" alt="">
       <div class="car-banner-overlay"></div>
       <div class="car-banner-info">
-        <div class="car-banner-icon" id="carIcon">🚗</div>
-        <div class="car-banner-text">
-          <div class="car-title" id="carTitle">—</div>
-          <div class="car-subtitle" id="carSubtitle">—</div>
+        <div class="car-icon-big" id="carIcon">🚗</div>
+        <div>
+          <div class="car-title" id="carTitle"></div>
+          <div class="car-subtitle" id="carSub"></div>
         </div>
       </div>
     </div>
-
     <div class="result-body">
       <div class="info-grid" id="infoGrid"></div>
-      <div class="section-title">🤖 AI TAVSIF</div>
-      <div class="ai-response" id="aiDesc">—</div>
-      <div class="section-title">🔧 ASOSIY ZAPCHASTLAR</div>
+      <div class="sec-title">📖 TAVSIF</div>
+      <div class="ai-desc" id="carDesc"></div>
+      <div class="sec-title">🔧 ZAPCHASTLAR</div>
       <div class="parts-grid" id="partsGrid"></div>
     </div>
   </div>
-</div>
 
-<div class="popular-section" id="popularSection">
-  <div class="section-header">MASHHUR BRENDLAR</div>
-  <div class="brand-grid">
-    <div class="brand-card" onclick="quickSearch('Toyota')"><div class="brand-logo">🇯🇵</div><div class="brand-name">Toyota</div><div class="brand-country">Yaponiya</div></div>
-    <div class="brand-card" onclick="quickSearch('BMW')"><div class="brand-logo">🇩🇪</div><div class="brand-name">BMW</div><div class="brand-country">Germaniya</div></div>
-    <div class="brand-card" onclick="quickSearch('Mercedes-Benz')"><div class="brand-logo">🇩🇪</div><div class="brand-name">Mercedes</div><div class="brand-country">Germaniya</div></div>
-    <div class="brand-card" onclick="quickSearch('Tesla')"><div class="brand-logo">🇺🇸</div><div class="brand-name">Tesla</div><div class="brand-country">AQSh</div></div>
-    <div class="brand-card" onclick="quickSearch('Honda')"><div class="brand-logo">🇯🇵</div><div class="brand-name">Honda</div><div class="brand-country">Yaponiya</div></div>
-    <div class="brand-card" onclick="quickSearch('Ford')"><div class="brand-logo">🇺🇸</div><div class="brand-name">Ford</div><div class="brand-country">AQSh</div></div>
-    <div class="brand-card" onclick="quickSearch('Hyundai')"><div class="brand-logo">🇰🇷</div><div class="brand-name">Hyundai</div><div class="brand-country">Koreya</div></div>
-    <div class="brand-card" onclick="quickSearch('Kia')"><div class="brand-logo">🇰🇷</div><div class="brand-name">Kia</div><div class="brand-country">Koreya</div></div>
-    <div class="brand-card" onclick="quickSearch('Audi')"><div class="brand-logo">🇩🇪</div><div class="brand-name">Audi</div><div class="brand-country">Germaniya</div></div>
-    <div class="brand-card" onclick="quickSearch('Chevrolet Cobalt')"><div class="brand-logo">🇺🇿</div><div class="brand-name">Chevrolet</div><div class="brand-country">O'zbekiston</div></div>
-    <div class="brand-card" onclick="quickSearch('Lada')"><div class="brand-logo">🇷🇺</div><div class="brand-name">Lada</div><div class="brand-country">Rossiya</div></div>
-    <div class="brand-card" onclick="quickSearch('Volkswagen')"><div class="brand-logo">🇩🇪</div><div class="brand-name">VW</div><div class="brand-country">Germaniya</div></div>
+  <div class="brands-section" id="brandsSection">
+    <div class="sec-header">MASHHUR BRENDLAR</div>
+    <div class="brand-grid">
+      <div class="brand-card" onclick="filterBrand('Toyota')"><div class="brand-flag">🇯🇵</div><div class="brand-name">Toyota</div><div class="brand-country">Yaponiya</div></div>
+      <div class="brand-card" onclick="filterBrand('BMW')"><div class="brand-flag">🇩🇪</div><div class="brand-name">BMW</div><div class="brand-country">Germaniya</div></div>
+      <div class="brand-card" onclick="filterBrand('Mercedes-Benz')"><div class="brand-flag">🇩🇪</div><div class="brand-name">Mercedes</div><div class="brand-country">Germaniya</div></div>
+      <div class="brand-card" onclick="filterBrand('Tesla')"><div class="brand-flag">🇺🇸</div><div class="brand-name">Tesla</div><div class="brand-country">AQSh</div></div>
+      <div class="brand-card" onclick="filterBrand('Honda')"><div class="brand-flag">🇯🇵</div><div class="brand-name">Honda</div><div class="brand-country">Yaponiya</div></div>
+      <div class="brand-card" onclick="filterBrand('Chevrolet')"><div class="brand-flag">🇺🇿</div><div class="brand-name">Chevrolet</div><div class="brand-country">O'zbekiston</div></div>
+      <div class="brand-card" onclick="filterBrand('Hyundai')"><div class="brand-flag">🇰🇷</div><div class="brand-name">Hyundai</div><div class="brand-country">Koreya</div></div>
+      <div class="brand-card" onclick="filterBrand('Lada')"><div class="brand-flag">🇷🇺</div><div class="brand-name">Lada</div><div class="brand-country">Rossiya</div></div>
+      <div class="brand-card" onclick="filterBrand('Audi')"><div class="brand-flag">🇩🇪</div><div class="brand-name">Audi</div><div class="brand-country">Germaniya</div></div>
+      <div class="brand-card" onclick="filterBrand('Kia')"><div class="brand-flag">🇰🇷</div><div class="brand-name">Kia</div><div class="brand-country">Koreya</div></div>
+      <div class="brand-card" onclick="filterBrand('Ford')"><div class="brand-flag">🇺🇸</div><div class="brand-name">Ford</div><div class="brand-country">AQSh</div></div>
+      <div class="brand-card" onclick="filterBrand('Volkswagen')"><div class="brand-flag">🇩🇪</div><div class="brand-name">VW</div><div class="brand-country">Germaniya</div></div>
+    </div>
   </div>
 </div>
 
-<footer>
-  <p>🚗 <span>CarWorld</span> — AI tomonidan quvvatlanadi &nbsp;|&nbsp; Barcha dunyo mashinalari haqida ma'lumot</p>
-</footer>
+<footer><p>🚗 <span>CarWorld</span> — Dunyo mashinalari ensiklopediyasi</p></footer>
 
 <script>
-// Unsplash source for images (free, no API key needed)
-function carImageUrl(query) {
-  const q = encodeURIComponent(query + ' car automobile');
-  return `https://source.unsplash.com/800x400/?${q}`;
+const CARS = {
+  chevrolet_cobalt:{name:"Chevrolet Cobalt",icon:"🚗",company:"GM Uzbekistan",country:"🇺🇿 O'zbekiston",founded:"2005",years:"2005–hozir",type:"Sedan",engine:"1.5L 4-silindr benzin",power:"106 ot kuchi",img:"https://source.unsplash.com/800x400/?chevrolet,cobalt,sedan",desc:"Chevrolet Cobalt — O'zbekistonda eng ko'p sotilgan mashinalardan biri. GM Uzbekistan tomonidan Asaka shahrida ishlab chiqariladi. Iqtisodiy yoqilg'i sarfi va qulay saloni bilan mashhur. O'rta sinf oilalar uchun ideal tanlov hisoblanadi. 2012-yildan beri yangilangan versiyasi ishlab chiqarilmoqda.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 5,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,mechanic"},{icon:"🛞",name:"Shina 185/65 R15",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?car,tire,wheel"},{icon:"🔋",name:"Akkumulyator 55Ah",detail:"Har 3-4 yil",img:"https://source.unsplash.com/300x200/?car,battery,auto"},{icon:"💨",name:"Havo filtri",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?air,filter,engine"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 25,000 km",img:"https://source.unsplash.com/300x200/?brake,disc,pads"},{icon:"⚙️",name:"Tormoz suyuqligi",detail:"Har 2 yil",img:"https://source.unsplash.com/300x200/?brake,fluid,mechanic"}]},
+
+  toyota_corolla:{name:"Toyota Corolla",icon:"🚗",company:"Toyota Motor",country:"🇯🇵 Yaponiya",founded:"1937",years:"1966–hozir",type:"Sedan",engine:"1.8L / 2.0L 4-silindr",power:"140–170 ot kuchi",img:"https://source.unsplash.com/800x400/?toyota,corolla,sedan",desc:"Toyota Corolla — dunyo tarixida eng ko'p sotilgan avtomobil. 1966-yildan beri 12 avlod mobaynida ishlab chiqarilgan. Ishonchlilik, tejamkorlik va past texnik xarajatlari bilan butun dunyoda mashhur. Har yili 1 millionga yaqin donasi sotiladi.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,toyota"},{icon:"🛞",name:"Shina 205/55 R16",detail:"Har 50,000 km",img:"https://source.unsplash.com/300x200/?car,tire,wheel"},{icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"Spark plug",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?spark,plug,engine"}]},
+
+  bmw_3series:{name:"BMW 3 Series",icon:"🏎️",company:"BMW Group",country:"🇩🇪 Germaniya",founded:"1916",years:"1975–hozir",type:"Sport Sedan",engine:"2.0L Turbo / 3.0L Inline-6",power:"184–374 ot kuchi",img:"https://source.unsplash.com/800x400/?bmw,3series,sport",desc:"BMW 3 Series — sport sedan sinfining etaloni. 1975-yildan beri 7 avlod mobaynida ishlab chiqarilgan. Haydovchi yo'naltirilgan boshqaruvi, mukammal muvozanati (50/50) va kuchli dvigateli bilan sport avtomashinalar orasida alohida o'rin egallaydi. M3 versiyasi esa haqiqiy sport mashinasi hisoblanadi.",parts:[{icon:"🔧",name:"Moy filtri (sintетik)",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,bmw"},{icon:"🛞",name:"Shina 225/45 R17",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?bmw,tire,wheel"},{icon:"🔋",name:"AGM Akkumulyator 90Ah",detail:"Har 5-6 yil",img:"https://source.unsplash.com/300x200/?agm,battery,car"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter,bmw"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://source.unsplash.com/300x200/?brake,pads,disc"},{icon:"⚙️",name:"Transmissiya moyi",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?transmission,gearbox"}]},
+
+  tesla_model_s:{name:"Tesla Model S",icon:"⚡",company:"Tesla Inc.",country:"🇺🇸 AQSh",founded:"2003",years:"2012–hozir",type:"Elektr Sedan",engine:"Elektr motor (Dual/Tri Motor)",power:"670–1020 ot kuchi",img:"https://source.unsplash.com/800x400/?tesla,model,electric",desc:"Tesla Model S — dunyo eng tez elektr avtomobillaridan biri. Plaid versiyasi 0-100 km/soatga 2.1 soniyada yetadi. 600+ km quvvat zaxirasi va over-the-air yangilanishlar bilan texnologiya olamida inqilob qildi. Autopilot va to'liq avtonom haydash imkoniyatlari bor.",parts:[{icon:"🔋",name:"Litiy batareya",detail:"8-10 yil kafolat",img:"https://source.unsplash.com/300x200/?tesla,battery,electric"},{icon:"⚙️",name:"Elektr motor",detail:"Deyarli texnik xizmat yo'q",img:"https://source.unsplash.com/300x200/?electric,motor,tesla"},{icon:"🛞",name:"Shina 245/45 R19",detail:"Har 30,000 km",img:"https://source.unsplash.com/300x200/?tesla,tire,wheel"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 80,000+ km",img:"https://source.unsplash.com/300x200/?brake,electric,car"},{icon:"❄️",name:"Sovutish suyuqligi",detail:"Har 4 yil",img:"https://source.unsplash.com/300x200/?coolant,fluid"},{icon:"🧹",name:"Kabinet filtri",detail:"Har 12,000 km",img:"https://source.unsplash.com/300x200/?cabin,air,filter"}]},
+
+  mercedes_e:{name:"Mercedes-Benz E-Class",icon:"🚗",company:"Mercedes-Benz Group",country:"🇩🇪 Germaniya",founded:"1926",years:"1953–hozir",type:"Lüks Sedan",engine:"2.0L Turbo / 3.0L V6",power:"197–429 ot kuchi",img:"https://source.unsplash.com/800x400/?mercedes,eclass,luxury",desc:"Mercedes-Benz E-Class — lüks biznes-sedan sinfining klassikasi. 70 yildan ortiq tarixga ega bo'lib, har avlodi yangi texnologiyalar bilan boyitilgan. Ichki bezagi, haydovchi yordamchi tizimlari va silindr o'chirish texnologiyasi bilan ajralib turadi.",parts:[{icon:"🔧",name:"Moy filtri (0W-40)",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,mercedes"},{icon:"🛞",name:"Shina 245/45 R18",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?mercedes,tire,wheel"},{icon:"🔋",name:"AGM Akkumulyator",detail:"Har 5-6 yil",img:"https://source.unsplash.com/300x200/?car,battery,agm"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter,engine"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?brake,pads,mercedes"},{icon:"⚙️",name:"Yulduzcha kamar",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?timing,belt,engine"}]},
+
+  lada_vesta:{name:"Lada Vesta",icon:"🚗",company:"AvtoVAZ",country:"🇷🇺 Rossiya",founded:"1966",years:"2015–hozir",type:"Sedan",engine:"1.6L / 1.8L 4-silindr",power:"106–122 ot kuchi",img:"https://source.unsplash.com/800x400/?lada,vesta,car,russia",desc:"Lada Vesta — Rossiyaning zamonaviy avtomobili. AvtoVAZ tomonidan Renault platformasida ishlab chiqarilgan. Arzon narxi va ishonchli mexanikasi bilan MDH mamlakatlarida keng tarqalgan. SW (universal) versiyasi ham mavjud.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 7,500 km",img:"https://source.unsplash.com/300x200/?oil,filter,car"},{icon:"🛞",name:"Shina 195/60 R15",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?car,tire,wheel"},{icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 3-4 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 25,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"Sovutish suyuqligi",detail:"Har 2 yil",img:"https://source.unsplash.com/300x200/?coolant,radiator"}]},
+
+  hyundai_elantra:{name:"Hyundai Elantra",icon:"🚗",company:"Hyundai Motor",country:"🇰🇷 Janubiy Koreya",founded:"1967",years:"1990–hozir",type:"Sedan",engine:"1.6L / 2.0L 4-silindr",power:"123–159 ot kuchi",img:"https://source.unsplash.com/800x400/?hyundai,elantra,sedan,korean",desc:"Hyundai Elantra — Koreya avtosanoatining muvaffaqiyatli mahsuloti. 30 yildan ortiq tarixda 7 avlod o'tdi. Zamonaviy dizayni, keng saloni va boyitilgan xavfsizlik tizimlari bilan taniqli. SmartSense haydovchi yordamchi tizimi N-line sport versiyasi mavjud.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://source.unsplash.com/300x200/?oil,filter"},{icon:"🛞",name:"Shina 205/55 R16",detail:"Har 45,000 km",img:"https://source.unsplash.com/300x200/?car,tire"},{icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"Spark plug",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?spark,plug"}]},
+
+  honda_civic:{name:"Honda Civic",icon:"🚗",company:"Honda Motor Co.",country:"🇯🇵 Yaponiya",founded:"1948",years:"1972–hozir",type:"Sedan / Hatchback",engine:"1.5L VTEC Turbo",power:"158–180 ot kuchi",img:"https://source.unsplash.com/800x400/?honda,civic,sedan",desc:"Honda Civic — 50 yildan ortiq tarixga ega iconic avtomobil. VTEC texnologiyasi bilan sport haydash tajribasini ommabop narxda taqdim etadi. Type R versiyasi esa muxlislarning sevimli sport mashinasi. Dunyo bo'ylab 27 million+ donasi sotilgan.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 8,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,honda"},{icon:"🛞",name:"Shina 215/50 R17",detail:"Har 45,000 km",img:"https://source.unsplash.com/300x200/?car,tire,wheel"},{icon:"🔋",name:"Akkumulyator 58Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"CVT moyi",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?cvt,transmission"}]},
+
+  audi_a4:{name:"Audi A4",icon:"🏎️",company:"Audi AG",country:"🇩🇪 Germaniya",founded:"1909",years:"1994–hozir",type:"Lüks Sport Sedan",engine:"1.4T / 2.0T / 3.0T",power:"150–354 ot kuchi",img:"https://source.unsplash.com/800x400/?audi,a4,luxury,german",desc:"Audi A4 — nemis muhandisligining namunaviy ko'rinishi. quattro to'liq yuldiz haydash tizimi va virtual kokpit bilan ajralib turadi. S4 va RS4 versiyalari esa yuksak unumdorlikni taqdim etadi. Audi MMI multimedia tizimi barcha zamonaviy texnologiyalarni o'z ichiga oladi.",parts:[{icon:"🔧",name:"Moy filtri (5W-40)",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,audi"},{icon:"🛞",name:"Shina 235/45 R17",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?audi,tire"},{icon:"🔋",name:"AGM Akkumulyator",detail:"Har 5 yil",img:"https://source.unsplash.com/300x200/?agm,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?brake,disc"},{icon:"⚙️",name:"DSG moyi",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?dsg,gearbox"}]},
+
+  ford_f150:{name:"Ford F-150",icon:"🚙",company:"Ford Motor Company",country:"🇺🇸 AQSh",founded:"1903",years:"1948–hozir",type:"Pick-up Truck",engine:"2.7L / 3.5L EcoBoost V6 / 5.0L V8",power:"290–450 ot kuchi",img:"https://source.unsplash.com/800x400/?ford,f150,truck,pickup",desc:"Ford F-150 — 47 yil davomida AQShda eng ko'p sotilgan avtomobil. Alyuminiy kuzov (4th gen) ishlab chiqarilishi bilan og'irligini keskin kamaytirdi. Lightning elektr versiyasi esa kelajak yuk avtomobillari uchun yangi standart o'rnatdi.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,truck"},{icon:"🛞",name:"Shina LT275/65 R18",detail:"Har 50,000 km",img:"https://source.unsplash.com/300x200/?truck,tire,wheel"},{icon:"🔋",name:"Akkumulyator 700CCA",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?truck,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter,ford"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?brake,truck"},{icon:"⚙️",name:"Differensial moyi",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?differential,axle"}]},
+
+  kia_sportage:{name:"Kia Sportage",icon:"🚙",company:"Kia Corporation",country:"🇰🇷 Janubiy Koreya",founded:"1944",years:"1993–hozir",type:"Compact SUV",engine:"1.6T / 2.0L / 2.5L",power:"150–235 ot kuchi",img:"https://source.unsplash.com/800x400/?kia,sportage,suv",desc:"Kia Sportage — dunyo bo'ylab mashhur kompakt SUV. 5-avlodda radikal yangi dizayn bilan xaridor e'tiborini tortdi. Panoramik shisha tom, hareket boshqaruvi va zamonaviy multimedia tizimi bilan boyitilgan. Afg'oniston va O'rta Osiyo bozorida ham keng tarqalgan.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 10,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,kia"},{icon:"🛞",name:"Shina 235/55 R18",detail:"Har 45,000 km",img:"https://source.unsplash.com/300x200/?suv,tire,wheel"},{icon:"🔋",name:"Akkumulyator 70Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 35,000 km",img:"https://source.unsplash.com/300x200/?brake,suv"},{icon:"⚙️",name:"AWD suyuqligi",detail:"Har 50,000 km",img:"https://source.unsplash.com/300x200/?awd,transfer,case"}]},
+
+  volkswagen_golf:{name:"Volkswagen Golf",icon:"🚗",company:"Volkswagen AG",country:"🇩🇪 Germaniya",founded:"1937",years:"1974–hozir",type:"Compact Hatchback",engine:"1.0T / 1.5T / 2.0T",power:"90–320 ot kuchi",img:"https://source.unsplash.com/800x400/?volkswagen,golf,hatchback",desc:"Volkswagen Golf — Yevropaning eng mashhur kompakt hatchback'i. GTI versiyasi «hot hatch» janrini yaratgan. 50 yildan ortiq tarixda 35 million+ donasi sotilgan. DSG avtomat uzatmalar qutisi birinchi marta Golf da ishlatilgan.",parts:[{icon:"🔧",name:"Moy filtri",detail:"Har 15,000 km",img:"https://source.unsplash.com/300x200/?oil,filter,vw"},{icon:"🛞",name:"Shina 205/55 R16",detail:"Har 40,000 km",img:"https://source.unsplash.com/300x200/?vw,tire"},{icon:"🔋",name:"Akkumulyator 60Ah",detail:"Har 4-5 yil",img:"https://source.unsplash.com/300x200/?car,battery"},{icon:"💨",name:"Havo filtri",detail:"Har 20,000 km",img:"https://source.unsplash.com/300x200/?air,filter"},{icon:"🛑",name:"Tormoz kolodka",detail:"Har 30,000 km",img:"https://source.unsplash.com/300x200/?brake,pads"},{icon:"⚙️",name:"DSG moyi",detail:"Har 60,000 km",img:"https://source.unsplash.com/300x200/?dsg,gearbox"}]}
+};
+
+// Qidiruv uchun kalit so'zlar xaritasi
+const SEARCH_MAP = {
+  'cobalt':'chevrolet_cobalt','chevrolet cobalt':'chevrolet_cobalt','kobalt':'chevrolet_cobalt',
+  'corolla':'toyota_corolla','toyota corolla':'toyota_corolla','toyota':'toyota_corolla',
+  'bmw':'bmw_3series','bmw 3':'bmw_3series','bmw 3 series':'bmw_3series','3 series':'bmw_3series',
+  'tesla':'tesla_model_s','model s':'tesla_model_s','tesla model s':'tesla_model_s',
+  'mercedes':'mercedes_e','mercedes e':'mercedes_e','e class':'mercedes_e','e-class':'mercedes_e',
+  'lada':'lada_vesta','vesta':'lada_vesta','lada vesta':'lada_vesta',
+  'elantra':'hyundai_elantra','hyundai':'hyundai_elantra','hyundai elantra':'hyundai_elantra',
+  'civic':'honda_civic','honda':'honda_civic','honda civic':'honda_civic',
+  'audi':'audi_a4','a4':'audi_a4','audi a4':'audi_a4',
+  'ford':'ford_f150','f150':'ford_f150','f-150':'ford_f150','ford f150':'ford_f150',
+  'sportage':'kia_sportage','kia':'kia_sportage','kia sportage':'kia_sportage',
+  'golf':'volkswagen_golf','vw golf':'volkswagen_golf','volkswagen':'volkswagen_golf','volkswagen golf':'volkswagen_golf'
+};
+
+function findCar(query) {
+  const q = query.toLowerCase().trim();
+  if (SEARCH_MAP[q]) return CARS[SEARCH_MAP[q]];
+  for (const key of Object.keys(SEARCH_MAP)) {
+    if (q.includes(key) || key.includes(q)) return CARS[SEARCH_MAP[key]];
+  }
+  return null;
 }
 
-function partImageUrl(partName) {
-  const q = encodeURIComponent(partName + ' auto car part');
-  return `https://source.unsplash.com/300x200/?${q}`;
+function liveSearch(val) {
+  if (!val.trim()) { hideResult(); return; }
 }
 
-async function search() {
-  const query = document.getElementById('searchInput').value.trim();
-  if (!query) return;
-  await fetchCarInfo(query);
-}
-
-function quickSearch(q) {
-  document.getElementById('searchInput').value = q;
-  fetchCarInfo(q);
-}
-
-function show(id) { document.getElementById(id).style.display = 'block'; }
-function hide(id) { document.getElementById(id).style.display = 'none'; }
-
-async function fetchCarInfo(query) {
-  const btn = document.getElementById('searchBtn');
-  btn.disabled = true;
-
-  hide('resultCard');
-  hide('errorMsg');
-  hide('popularSection');
-  show('loading');
-
-  const prompt = `Siz avtomobil eksperti va ensiklopediya AI siz. Foydalanuvchi "${query}" haqida so'radi.
-
-Quyidagi JSON formatda javob ber (faqat JSON, boshqa matn yo'q):
-{
-  "name": "To'liq nomi (masalan: Toyota Camry 2020)",
-  "icon": "mos emoji (🚗 yoki 🏎️ yoki 🚙 yoki 🚕 yoki 🚐 yoki ⚡)",
-  "company": "Kompaniya nomi",
-  "country": "Ishlab chiqarilgan davlat (bayroq emoji bilan, masalan: 🇯🇵 Yaponiya)",
-  "founded": "Kompaniya tashkil yili",
-  "year_range": "Ishlab chiqarilgan yillar (masalan: 1982–2024)",
-  "type": "Tur (Sedan / SUV / Sport / Elektr / Yuk va h.k.)",
-  "engine": "Dvigatel (masalan: 2.5L 4-silindrli benzin)",
-  "power": "Quvvat (masalan: 203 ot kuchi)",
-  "image_search": "Inglizcha qidiruv so'zi bu mashinaning rasmi uchun (masalan: Toyota Camry 2020 sedan)",
-  "description": "O'zbek tilida 4-5 jumlali tavsif: tarixi, xususiyatlari, mashhurlik sababi",
-  "parts": [
-    {"icon": "🔧", "name": "Moy filtri", "detail": "Har 5,000-10,000 km", "img_search": "oil filter"},
-    {"icon": "🛞", "name": "Shina", "detail": "205/55 R16", "img_search": "car tire wheel"},
-    {"icon": "🔋", "name": "Akkumulyator", "detail": "60-70 Ah", "img_search": "car battery"},
-    {"icon": "💨", "name": "Havo filtri", "detail": "Har 15,000 km", "img_search": "air filter automotive"},
-    {"icon": "🛑", "name": "Tormoz kolodkasi", "detail": "Har 30,000 km", "img_search": "brake pads disc"},
-    {"icon": "⚙️", "name": "Transmissiya", "detail": "Har 60,000 km", "img_search": "car transmission gearbox"}
-  ]
-}
-
-Faqat JSON qaytargin.`;
-
-  try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-6',
-        max_tokens: 1200,
-        messages: [{ role: 'user', content: prompt }]
-      })
-    });
-
-    const data = await response.json();
-    const text = data.content.map(i => i.text || '').join('');
-    const clean = text.replace(/```json|```/g, '').trim();
-    const car = JSON.parse(clean);
-
-    renderResult(car);
-  } catch (e) {
-    hide('loading');
-    show('errorMsg');
-    show('popularSection');
-  } finally {
-    btn.disabled = false;
+function doSearch() {
+  const q = document.getElementById('searchInput').value;
+  const car = findCar(q);
+  if (car) showCar(car);
+  else {
+    document.getElementById('notFound').style.display = 'block';
+    document.getElementById('resultCard').style.display = 'none';
+    document.getElementById('brandsSection').style.display = 'none';
   }
 }
 
-function renderResult(car) {
-  hide('loading');
+function selectCar(key) {
+  document.getElementById('searchInput').value = CARS[key].name;
+  showCar(CARS[key]);
+}
 
-  document.getElementById('carIcon').textContent = car.icon || '🚗';
-  document.getElementById('carTitle').textContent = car.name || '—';
-  document.getElementById('carSubtitle').textContent = `${car.company || ''} · ${car.country || ''}`;
+function filterBrand(brand) {
+  const found = Object.values(CARS).find(c => c.company.includes(brand) || c.name.includes(brand));
+  if (found) { document.getElementById('searchInput').value = found.name; showCar(found); }
+}
 
-  // Car image
-  const imgEl = document.getElementById('carBannerImg');
-  const imgLoading = document.getElementById('carImgLoading');
-  const searchTerm = car.image_search || car.name || 'car';
-  const imgUrl = carImageUrl(searchTerm);
-  imgEl.style.display = 'none';
-  imgLoading.innerHTML = '<div class="car-img-loading-spin"></div>';
-  imgEl.onload = () => {
-    imgLoading.style.display = 'none';
-    imgEl.style.display = 'block';
-  };
-  imgEl.onerror = () => {
-    imgLoading.innerHTML = '<span style="font-size:64px">🚗</span>';
-  };
-  imgEl.src = imgUrl;
+function hideResult() {
+  document.getElementById('resultCard').style.display = 'none';
+  document.getElementById('notFound').style.display = 'none';
+  document.getElementById('brandsSection').style.display = 'block';
+}
 
-  // Info grid
-  const infoData = [
-    { label: 'Kompaniya', value: car.company },
-    { label: 'Davlat', value: car.country },
-    { label: 'Asos solingan', value: car.founded, hl: true },
-    { label: 'Ishlab chiqarilgan', value: car.year_range },
-    { label: 'Tur', value: car.type },
-    { label: 'Dvigatel', value: car.engine },
-    { label: 'Quvvat', value: car.power, hl: true },
+function showCar(car) {
+  document.getElementById('notFound').style.display = 'none';
+  document.getElementById('brandsSection').style.display = 'none';
+
+  document.getElementById('carIcon').textContent = car.icon;
+  document.getElementById('carTitle').textContent = car.name;
+  document.getElementById('carSub').textContent = car.company + ' · ' + car.country;
+
+  const img = document.getElementById('carImg');
+  img.src = car.img;
+  img.onerror = () => img.src = 'https://source.unsplash.com/800x400/?car,automobile';
+
+  const tiles = [
+    {l:'Kompaniya',v:car.company},
+    {l:'Davlat',v:car.country},
+    {l:'Tashkil yili',v:car.founded,h:true},
+    {l:'Yillar',v:car.years},
+    {l:'Tur',v:car.type},
+    {l:'Dvigatel',v:car.engine},
+    {l:'Quvvat',v:car.power,h:true}
   ];
+  document.getElementById('infoGrid').innerHTML = tiles.map(t =>
+    `<div class="info-tile"><div class="info-tile-label">${t.l}</div><div class="info-tile-value ${t.h?'hl':''}">${t.v}</div></div>`
+  ).join('');
 
-  document.getElementById('infoGrid').innerHTML = infoData.filter(d => d.value).map(d => `
-    <div class="info-tile">
-      <div class="info-tile-label">${d.label}</div>
-      <div class="info-tile-value ${d.hl ? 'highlight' : ''}">${d.value}</div>
-    </div>
-  `).join('');
+  document.getElementById('carDesc').textContent = car.desc;
 
-  document.getElementById('aiDesc').textContent = car.description || '';
-
-  // Parts with images
-  document.getElementById('partsGrid').innerHTML = (car.parts || []).map(p => {
-    const pImg = partImageUrl(p.img_search || p.name);
-    const uid = Math.random().toString(36).slice(2);
-    return `
+  document.getElementById('partsGrid').innerHTML = car.parts.map(p => `
     <div class="part-card">
-      <div class="part-img-wrap">
-        <div class="part-img-loading-wrap" id="pload-${uid}">
-          <div class="part-img-spin"></div>
-        </div>
-        <img class="part-img" id="pimg-${uid}"
-          src="${pImg}" alt="${p.name}" style="display:none"
-          onload="this.style.display='block'; document.getElementById('pload-${uid}').style.display='none';"
-          onerror="this.style.display='none'; document.getElementById('pload-${uid}').innerHTML='<span style=\\'font-size:36px\\'>${p.icon}</span>';">
+      <div class="part-img-box">
+        <img src="${p.img}" alt="${p.name}" onerror="this.parentNode.innerHTML='<span style=\'font-size:36px\'>${p.icon}</span>'">
       </div>
       <div class="part-info">
         <div class="part-name">${p.icon} ${p.name}</div>
         <div class="part-detail">${p.detail}</div>
       </div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 
-  show('resultCard');
-  document.getElementById('resultCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('resultCard').style.display = 'block';
+  document.getElementById('resultCard').scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+// Enter tugmasi
+document.getElementById('searchInput').addEventListener('keydown', e => { if(e.key==='Enter') doSearch(); });
 </script>
 </body>
 </html>
